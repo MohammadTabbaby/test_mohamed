@@ -1,1 +1,63 @@
-<p>post-item works!</p>
+<br>
+<div class="container">
+     
+          <div class="card">
+            <div class="card-content bg-dark text-white">
+              <div class="card-body">
+                <div class="row">
+                <div class="col-4">
+                  <form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
+                    <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="postService.selectedPost._id">
+                    <br><br>
+                    <div class="form-group">
+                        <label for="titreInput">Titre de post</label><br>
+                        <input class="form-control" id="titreInput" type="text" name="titre" #name="ngModel" [(ngModel)]="postService.selectedPost.titre" placeholder="Article 1" required>
+                      </div>
+                      <br><br>
+                    <div class="form-group">
+                        <label for="ContenuInput">Contenu de post</label>
+                        <textarea class="form-control" id="ContenuInput" rows="3" name="contenu" #name="ngModel" [(ngModel)]="postService.selectedPost.contenu" required></textarea>
+                      </div>
+                      <br><br>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <button class="btn btn-warning" type="button" (click)="resetForm(postForm)">Reset</button>&nbsp;
+                        <button class="btn btn-primary" type="submit" [disabled]="!postForm.valid">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <br>
+                <div class="col-8">
+                    <h2>Tableau de Posts</h2>
+                    <table class="table table-dark table-hover">
+                      <thead>
+                        <tr>
+                          <th>Titre</th>
+                          <th>Contenu</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let po of postService.posts">
+                          <td>{{po.titre}}</td>
+                          <td>{{po.contenu}}</td>
+                          <td>
+                            <a class="action-btn" (click)="onEdit(po)">
+                              <fa-icon [icon]="faPenToSquare"></fa-icon>
+                            </a>
+                            &nbsp;
+                            <a class="action-btn" (click)="onDelete(po._id,postForm)">
+                              <fa-icon [icon]="faTrash"></fa-icon>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+   
+              </div>
+            </div>
+            </div>
+          </div>
+      
+  </div>
+  <br><br><br><br><br>

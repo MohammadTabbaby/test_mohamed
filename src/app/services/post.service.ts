@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
+import { catchError } from 'rxjs/operators';
 
 import { Post } from '../models/post.model';
 
 @Injectable()
-export class EmployeeService {
+export class PostService {
   selectedPost!: Post;
   posts!: Post[];
-  readonly baseURL = 'http://localhost:3000/posts';
+  readonly baseURL = 'http://localhost:3000/post';
 
   constructor(public http: HttpClient) { }
 
@@ -30,4 +29,9 @@ export class EmployeeService {
     return this.http.delete(this.baseURL + `/${_id}`);
   }
 
+  refreshPostList() {
+    this.getPostList().subscribe((res) => {
+      this.posts = res as Post[];
+    });
+  }
 }
